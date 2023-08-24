@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const data = [
   {
@@ -48,10 +48,9 @@ const data = [
 
   function Chart() {
     return (
-      
+      <div className='chartContainer'>
+        <ResponsiveContainer height="100%" width="100%">
         <LineChart
-          width={700}
-          height={500}
           data={data}
           margin={{
             top: 5,
@@ -68,6 +67,8 @@ const data = [
           <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
           <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
         </LineChart>
+        </ResponsiveContainer>
+        </div>
     );
   }
 

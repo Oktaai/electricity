@@ -1,31 +1,16 @@
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+
+import { useState } from 'react';
 import DaySwitcher from './DaySwitcher';
-import HeaderInfoFooter from './HeaderOfFooter';
-import Timer from './Timer';
+import SideBar from './SideBar';
+
 
 function Footer() {
+  const [showSideBar, setShowSideBar] = useState(false);
   return (
-    <Container >
-        <Row className="justify-content-md-center">
-            <Col md="auto">
-            <HeaderInfoFooter/>
-            </Col>
-        </Row>
-      <Row className="justify-content-md-center">
-        <Col md="auto">
-            <DaySwitcher/>
-        </Col>
-      </Row>
-      
-      <Row className="justify-content-md-center">
-        <Col md="auto">
-            <Timer/>
-        </Col>
-      </Row>
-      
-    </Container>
+  <>
+            <DaySwitcher setShowSideBar={setShowSideBar}/>
+            <SideBar show={showSideBar} handleClose={()=> setShowSideBar(false)}/>
+    </>
   );
 }
 
