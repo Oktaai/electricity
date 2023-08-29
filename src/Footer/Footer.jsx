@@ -10,7 +10,7 @@ function Footer(props) {
   return (
   <>
             <TableSwitcher {...props}/>
-            <DaySwitcher setShowSideBar={setShowSideBar}/>
+            <DaySwitcher setShowSideBar={setShowSideBar} {...props}/>
             <SideBar show={showSideBar} handleClose={()=> setShowSideBar(false)}/>
     </>
   );

@@ -1,6 +1,6 @@
 import Form from 'react-bootstrap/Form';
 import { Container } from 'react-bootstrap';
-// import{CHART, TABLE} from '../constants';
+import {CHART, TABLE} from '../constants'
 
 
 function TableSwitcher({dataType, setDataType}){
@@ -12,8 +12,8 @@ function TableSwitcher({dataType, setDataType}){
             name="group1"
             type="radio"
             id={`inline-1`}
-            onClick={() => setDataType('CHART')}
-            defaultChecked={dataType === 'CHART'}
+            onClick={() => setDataType(CHART)}
+            defaultChecked={dataType === CHART}
           />
           <Form.Check
             inline
@@ -21,7 +21,7 @@ function TableSwitcher({dataType, setDataType}){
             name="group1"
             type="radio"
             id={`inline-2`}
-            onClick={() => setDataType('TABLE')}
+            onClick={() => setDataType(TABLE)}
           />
           </Container>
           

@@ -2,9 +2,9 @@ import moment from "moment";
 
 const apiUrl = 'https://dashboard.elering.ee/api';
 
-export async function getElectricityPrice(){
+export async function getElectricityPrice(selectedPeriod){
     const start = moment().subtract('10','hours').toISOString();
-    const end = moment().add('2','days').toISOString();
+    const end = moment().add(selectedPeriod,'days').toISOString();
 
     const params = new URLSearchParams({
         start,
@@ -16,9 +16,9 @@ export async function getElectricityPrice(){
     return await response.json();
 }
 
-export async function getGasPrice(){
+export async function getGasPrice(selectedPeriod){
     const start = moment().subtract('10','hours').toISOString();
-    const end = moment().add('2','days').toISOString();
+    const end = moment().add(selectedPeriod,'days').toISOString();
     const params = new URLSearchParams({
         start,
         end,
