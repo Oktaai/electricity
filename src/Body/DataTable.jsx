@@ -2,6 +2,8 @@ import Table from 'react-bootstrap/Table';
 import moment from 'moment';
 
 function DataTable({electricityPrice}) {
+  const now = moment().startOf('hour').unix();
+
   const data = electricityPrice?.ee.map((priceEE, index) => {
     return{
       ee: priceEE,
@@ -24,7 +26,7 @@ function DataTable({electricityPrice}) {
       </thead>
       <tbody>
        {data.map(({ee, lt, lv, fi},index) => (
-        <tr key={index}>
+        <tr className={ ee.timestamp === now ?  "activeline" :null}  key={index} >
           <td>{index}</td>
           <td>{moment.unix(ee.timestamp).format('DD.MM.YYYY HH:mm:ss')}</td>
           <td>{ee.price}</td>
@@ -39,3 +41,4 @@ function DataTable({electricityPrice}) {
 }
 
 export default DataTable;
+

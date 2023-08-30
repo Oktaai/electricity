@@ -40,6 +40,7 @@ useEffect(()=> {
         <Header 
         activeEnergy={activeEnergy} 
         setActiveEnergy={setActiveEnergy}
+        electricityPrice={electricityPrice}
         />
         {dataType === CHART?
         <Chart activeEnergy={activeEnergy}
