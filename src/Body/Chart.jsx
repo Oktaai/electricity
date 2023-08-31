@@ -1,6 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
 import moment from 'moment';
 import React from 'react';
+import { NOW_TIMESTAMP } from '../constants';
 
 
 function Chart({electricityPrice}) {
@@ -8,7 +9,7 @@ function Chart({electricityPrice}) {
     price => ({...price, hour: moment.unix(price.timestamp).format('HH')})
     );
 
-    const now = moment().format('HH');
+    
     return (
           <div className='chartContainer'>
             <ResponsiveContainer height="100%" width="100%">
@@ -27,7 +28,7 @@ function Chart({electricityPrice}) {
               <Tooltip />
               <Legend />
               <Line type="monotone" dataKey="price" stroke="#8884d8" activeDot={{ r: 8 }} />
-              <ReferenceLine x={data?.findIndex(({hour}) => hour === now)} stroke={'red'}/>
+              <ReferenceLine x={data?.findIndex(({timestamp}) => timestamp === NOW_TIMESTAMP)} stroke={'red'}/>
             </LineChart>
             </ResponsiveContainer>
             </div>

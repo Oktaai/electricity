@@ -1,11 +1,21 @@
-import moment from "moment";
+
+import { useEffect, useState } from "react";
+import { NOW_TIMESTAMP } from "../constants";
+
 
 function Price({electricityPrice}){
-    const now = moment().startOf('hour').unix();
-    const price = electricityPrice?.ee.map(item => item.timestamp === now? item.price:null);
+    const [currentPrice, setCurrentPrice] = useState(0);
+    useEffect(()=> {
+        if(!electricityPrice) return;
+        
+
+        const {price} = electricityPrice.ee.find(item => item.timestamp === NOW_TIMESTAMP);   
+        setCurrentPrice(price);
+    },[electricityPrice])
+
     return(
         <>
-        <h2>{price}</h2>
+        <h2>{currentPrice}</h2>
         <div>Sents/kw</div>
         </>
     )
