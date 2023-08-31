@@ -6,13 +6,17 @@ export const CHART = 'chart';
 export const TABLE ='table';
 export const NOW_TIMESTAMP =moment().startOf('hour').unix();
 export const LOW_ELE_PRICE = 120;
+const label= {
+  [ELE]: 'days',
+  [GAS]: 'month'
+};
 export const PERIODS =[
     {
-      label: '1d',
+      label,
       value:1,
     },
     {
-      label:'2d',
+      label,
       value:2,
     },
   ]

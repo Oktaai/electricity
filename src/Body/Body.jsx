@@ -2,15 +2,15 @@ import Header from "./Header";
 import Chart from "./Chart";
 import './body.scss';
 import { useState, useEffect } from "react";
-import {ELE, CHART} from "../constants";
+import { CHART} from "../constants";
 import DataTable from "./DataTable";
 import ErrorModal from "./ErrorModal";
 import { getElectricityPrice, getGasPrice } from "../services/apiService";
 
 
 
-function Body({dataType,selectedPeriod}){
-    const [activeEnergy, setActiveEnergy] = useState(ELE);
+function Body({dataType,selectedPeriod,setActiveEnergy,activeEnergy}){
+    
     const [electricityPrice, setElectricityPrice] = useState(null);
     const [gasPrice, setGasPrice] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -47,7 +47,9 @@ useEffect(()=> {
         electricityPrice={electricityPrice}
         gasPrice={gasPrice}
         /> : <DataTable electricityPrice={electricityPrice}
-        gasPrice={gasPrice}/>}
+        gasPrice={gasPrice}
+        activeEnergy={activeEnergy}
+        />}
         <ErrorModal errorMessage={errorMessage} handleClose = {() => setErrorMessage(null)}/>
         </>
     )

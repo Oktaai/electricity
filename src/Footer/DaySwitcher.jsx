@@ -4,7 +4,7 @@ import { PERIODS } from '../constants';
 
 
 
-function Periods({setShowSideBar,selectedPeriod,setSelectedPeriod}) {
+function Periods({setShowSideBar,selectedPeriod,setSelectedPeriod,activeEnergy}) {
   
     
     return(
@@ -12,12 +12,12 @@ function Periods({setShowSideBar,selectedPeriod,setSelectedPeriod}) {
      {PERIODS.map(({label,value}) => 
      <Button 
         className='mx-2'
-        key={label} 
+        key={value} 
         variant='primary'
         active={selectedPeriod === value}
         onClick={() => setSelectedPeriod(value)}
         >
-        {label}
+        {value}{label[activeEnergy]}
      </Button> 
      )}
      <Button 
