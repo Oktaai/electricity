@@ -12,7 +12,7 @@ export async function getElectricityPrice(selectedPeriod){
     });
 
     const response = await fetch(`${apiUrl}/nps/price?${params}`);
-
+    
     return await response.json();
 }
 
@@ -25,5 +25,10 @@ export async function getGasPrice(selectedPeriod){
     });
 
     const response = await fetch(`${apiUrl}/gas-trade?${params}`);
+    return await response.json();
+}
+
+export async function getLastGasPrice(){
+    const response = await fetch(`${apiUrl}/nps/price/EE/latest`);
     return await response.json();
 }

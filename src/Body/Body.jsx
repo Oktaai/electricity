@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { CHART} from "../constants";
 import DataTable from "./DataTable";
 import ErrorModal from "./ErrorModal";
-import { getElectricityPrice, getGasPrice } from "../services/apiService";
+import { getElectricityPrice, getGasPrice, getLastGasPrice } from "../services/apiService";
 
 
 
@@ -14,6 +14,7 @@ function Body({dataType,selectedPeriod,setActiveEnergy,activeEnergy}){
     const [electricityPrice, setElectricityPrice] = useState(null);
     const [gasPrice, setGasPrice] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
+    const [lastGasPrice, setLastGasPrice] = useState(null);
 useEffect(()=> {
     
     getElectricityPrice(selectedPeriod).then(data=>{
@@ -33,6 +34,14 @@ useEffect(()=> {
 
 })
 .catch(setErrorMessage);
+    getLastGasPrice().then(data=>{
+        console.log('lastGas',data);
+        if(!data.success){
+            throw data.messages[0];
+        }
+        setLastGasPrice(data.data);
+    })
+    .catch(setErrorMessage);
 },[selectedPeriod]);
 
     return(
@@ -41,6 +50,7 @@ useEffect(()=> {
         activeEnergy={activeEnergy} 
         setActiveEnergy={setActiveEnergy}
         electricityPrice={electricityPrice}
+        lastGasPrice={lastGasPrice}
         />
         {dataType === CHART?
         <Chart activeEnergy={activeEnergy}
