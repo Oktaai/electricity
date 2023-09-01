@@ -4,7 +4,7 @@ const apiUrl = 'https://dashboard.elering.ee/api';
 
 export async function getElectricityPrice(selectedPeriod){
     const start = moment().subtract('10','hours').toISOString();
-    const end = moment().add(selectedPeriod,'days').toISOString();
+    const end = moment().add(selectedPeriod,'day').toISOString();
 
     const params = new URLSearchParams({
         start,
@@ -29,6 +29,6 @@ export async function getGasPrice(selectedPeriod){
 }
 
 export async function getLastGasPrice(){
-    const response = await fetch(`${apiUrl}/nps/price/EE/latest`);
+    const response = await fetch(`${apiUrl}/gas-trade/EE/latest`);
     return await response.json();
 }
