@@ -5,19 +5,28 @@ import { useState, useEffect } from "react";
 import { CHART} from "../constants";
 import DataTable from "./DataTable";
 import ErrorModal from "./ErrorModal";
-import { getElectricityPrice, getGasPrice, getLastGasPrice } from "../services/apiService";
+import { getElectricityPrice, getGasPrice, getLastGasPrice} from "../services/apiService";
 
 
 
-function Body({dataType,selectedPeriod,setActiveEnergy,activeEnergy}){
+function Body({
+    dataType,
+    selectedPeriod,
+    setActiveEnergy,
+    activeEnergy,
+    electricityPrice,
+    setElectricityPrice,
+    gasPrice,
+    setGasPrice,
+    lastGasPrice,
+    setLastGasPrice,
+}){
     
-    const [electricityPrice, setElectricityPrice] = useState(null);
-    const [gasPrice, setGasPrice] = useState(null);
+   
     const [errorMessage, setErrorMessage] = useState(null);
-    const [lastGasPrice, setLastGasPrice] = useState(null);
 useEffect(()=> {
     
-    getElectricityPrice(selectedPeriod).then(data=>{
+    getElectricityPrice({selectedPeriod}).then(data=>{
             console.log('ele',data);
             if(!data.success){
                 throw data.messages[0];
@@ -25,7 +34,7 @@ useEffect(()=> {
             setElectricityPrice(data.data);
 })
 .catch(setErrorMessage);
-    getGasPrice(selectedPeriod).then(data=>{
+    getGasPrice({selectedPeriod}).then(data=>{
             console.log('gas', data);
             if(!data.success){
                 throw data.messages[0];
@@ -34,15 +43,21 @@ useEffect(()=> {
 
 })
 .catch(setErrorMessage);
+},[selectedPeriod, setElectricityPrice,setGasPrice]);
+
+useEffect(()=> {
     getLastGasPrice().then(data=>{
         console.log('lastGas',data);
         if(!data.success){
             throw data.messages[0];
         }
-        setLastGasPrice(data.data);
+        setLastGasPrice(data.data[0].price);
     })
     .catch(setErrorMessage);
-},[selectedPeriod]);
+        
+
+},[setLastGasPrice]);
+
 
     return(
         <>
@@ -60,7 +75,9 @@ useEffect(()=> {
         gasPrice={gasPrice}
         activeEnergy={activeEnergy}
         />}
-        <ErrorModal errorMessage={errorMessage} handleClose = {() => setErrorMessage(null)}/>
+        <ErrorModal errorMessage={errorMessage} 
+        handleClose = {() => setErrorMessage(null)}
+        />
         </>
     )
 }
