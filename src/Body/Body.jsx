@@ -1,12 +1,11 @@
 import Header from "./Header";
 import Chart from "./Chart";
 import './body.scss';
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { CHART} from "../constants";
 import DataTable from "./DataTable";
-import ErrorModal from "./ErrorModal";
 import { getElectricityPrice, getGasPrice, getGasCurrentPrice} from "../services/apiService";
-import { setElectricityPrice,  setGasPrice, setGasCurrentPrice } from "../services/stateService";
+import { setElectricityPrice,  setGasPrice, setGasCurrentPrice,setErrorMessage } from "../services/stateService";
 import { useDispatch,useSelector } from "react-redux";
 
 
@@ -17,7 +16,6 @@ function Body(){
     const selectedPeriod = useSelector((state)=>state.selectedPeriod);
     const dispatch = useDispatch();
     
-    const [errorMessage, setErrorMessage] = useState(null);
 useEffect(()=> {
     
     getElectricityPrice({selectedPeriod}).then(data=>{
@@ -27,7 +25,7 @@ useEffect(()=> {
             }
            dispatch( setElectricityPrice(data.data));
 })
-.catch(setErrorMessage);
+.catch((error)=>dispatch(setErrorMessage(error)));
     getGasPrice({selectedPeriod}).then(data=>{
             console.log('gas', data);
             if(!data.success){
@@ -36,7 +34,7 @@ useEffect(()=> {
            dispatch( setGasPrice(data.data));
 
 })
-.catch(setErrorMessage);
+.catch((error)=>dispatch(setErrorMessage(error)));
 },[selectedPeriod, dispatch]);
 
 useEffect(()=> {
@@ -47,7 +45,7 @@ useEffect(()=> {
         }
 dispatch(setGasCurrentPrice (data.data[0].price));
     })
-    .catch(setErrorMessage);
+    .catch((error)=>dispatch(setErrorMessage(error)));
         
 
 },[dispatch]);
@@ -58,9 +56,7 @@ dispatch(setGasCurrentPrice (data.data[0].price));
         <Header/>
         {dataType === CHART?
         <Chart/> : <DataTable />}
-        <ErrorModal errorMessage={errorMessage} 
-        handleClose = {() => setErrorMessage(null)}
-        />
+        
         </>
     )
 }

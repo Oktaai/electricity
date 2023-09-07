@@ -5,18 +5,18 @@ import PriceInfo from './PriceInfo';
 import Switcher from './Switcher';
 import Price from './Price';
 
-function Header(props) {
+function Header() {
   return (
     <Container>
       <Row>
         <Col>
-            <PriceInfo {...props}/>
+            <PriceInfo />
         </Col>
         <Col className='d-flex align-items-center justify-content-center'>
-            <Switcher {...props}/>
+            <Switcher/>
         </Col>
         <Col className="d-flex flex-column align-items-end">
-            <Price {...props}/>
+            <Price/>
         </Col>
       </Row>
     </Container>

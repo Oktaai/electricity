@@ -3,12 +3,12 @@ import Button from 'react-bootstrap/Button';
 import { PERIODS } from '../constants';
 import { useSelector,useDispatch } from 'react-redux';
 import { setSelectedPeriod } from '../services/stateService';
-import { useState } from 'react';
+
 
 
 function Periods({setShowSideBar}) {
   const selectedPeriod = useSelector((state)=>state.selectedPeriod)
-  const activeEnergy = useState((state)=>state.activeEnergy);
+  const activeEnergy = useSelector((state)=>state.activeEnergy);
   const dispatch = useDispatch();
     
     return(
