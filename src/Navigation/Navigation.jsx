@@ -1,12 +1,14 @@
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
+import { Link } from 'react-router-dom';
 
 
 function Navigation(){
     return(
         <Navbar data-bs-theme='dark' className="bg-body-tertiary">
         <Container>
-          <Navbar.Brand href="#home">
+          <Link to='/' className='navbar-brand'>
+           
             <img
               alt=""
               src="/logo.svg"
@@ -15,7 +17,10 @@ function Navigation(){
               className="d-inline-block align-top"
             />{' '}
             React Bootstrap
-          </Navbar.Brand>
+          </Link>
+          <Link to="/contact" className='nav-link'>Contact</Link>
+          
+        
         </Container>
       </Navbar>
     )
