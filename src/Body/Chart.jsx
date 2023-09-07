@@ -2,9 +2,12 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import moment from 'moment';
 import React, {useState,useEffect} from 'react';
 import { NOW_TIMESTAMP, ELE, GAS} from '../constants';
+import {  useSelector } from 'react-redux/es/hooks/useSelector';
 
 
-function Chart({electricityPrice, activeEnergy, gasPrice}) {
+function Chart({ activeEnergy}) {
+  const gasPrice = useSelector((state)=>state.gasPrice);
+  const electricityPrice = useSelector((state) => state.electricityPrice);
   const [chartData, setChartData] = useState([]);
 
     useEffect(()=>{

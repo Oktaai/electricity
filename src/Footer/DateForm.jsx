@@ -3,13 +3,16 @@ import Form from 'react-bootstrap/Form';
 import { getElectricityPrice, getGasPrice } from '../services/apiService';
 import { useState } from 'react';
 import ErrorModal from '../Body/ErrorModal';
+import { setElectricityPrice,setGasPrice } from '../services/stateService';
+import { useDispatch } from 'react-redux';
 
 function DateForm({
-setElectricityPrice,
-setGasPrice,
-setLastGasPrice,
+
+
+
 hideSideBar
 }) {
+  const dispatch = useDispatch();
   const [errorMessage,setErrorMessage]=useState(null);
 
 const handleSubmit = async (event) => {
@@ -26,15 +29,10 @@ try{
   if(![dataEle, dataGas].find(data => data.success)){
     throw (dataEle||dataGas).messages[0];
   }
-  setElectricityPrice(dataEle.data);
+  dispatch(setElectricityPrice(dataEle.data));
 
-  setGasPrice(dataGas.data);
+  dispatch(setGasPrice(dataGas.data));
 
-// const dataLastGas = await getLastGasPrice(1);
-// if(!dataLastGas.success){
-//   throw dataLastGas.messages[0];
-// }
-// setLastGasPrice(dataLastGas.data[0].price);
 }catch(error){
   setErrorMessage(error);
 }

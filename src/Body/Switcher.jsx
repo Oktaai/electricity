@@ -2,21 +2,25 @@
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import {ELE,GAS} from '../constants';
+import { setActiveEnergy } from '../services/stateService';
+import { useDispatch,useSelector } from 'react-redux';
 
-function Switcher({activeEnergy, setActiveEnergy}) {
+function Switcher() {
+  const activeEnergy = useSelector((state)=>state.activeEnergy);
+  const dispatch = useDispatch();
 
   return (
     <ButtonGroup>
       <Button 
       className="text-capitalize"
       variant="secondary" 
-      onClick={()=> setActiveEnergy(ELE)} 
+      onClick={()=> dispatch( setActiveEnergy(ELE))} 
       active={activeEnergy === ELE}
       >{ELE}</Button>
       <Button 
       className="text-capitalize"
       variant="secondary" 
-      onClick={()=> setActiveEnergy(GAS)}
+      onClick={()=> dispatch(setActiveEnergy(GAS))}
       active={activeEnergy === GAS}
       >{GAS}</Button>
     </ButtonGroup>

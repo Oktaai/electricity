@@ -1,9 +1,13 @@
 import Form from 'react-bootstrap/Form';
 import { Container } from 'react-bootstrap';
-import {CHART, TABLE} from '../constants'
+import {CHART, TABLE} from '../constants';
+import {setDataType} from "../services/stateService";
+import { useDispatch, useSelector } from 'react-redux';
 
 
-function TableSwitcher({dataType, setDataType}){
+function TableSwitcher(){
+  const dataType = useSelector((state)=>state.dataType);
+  const dispatch = useDispatch();
     return(
             <Container className='text-center my-2'>
           <Form.Check
@@ -12,7 +16,7 @@ function TableSwitcher({dataType, setDataType}){
             name="group1"
             type="radio"
             id={`inline-1`}
-            onClick={() => setDataType(CHART)}
+            onClick={() => dispatch(setDataType(CHART))}
             defaultChecked={dataType === CHART}
           />
           <Form.Check
@@ -21,7 +25,7 @@ function TableSwitcher({dataType, setDataType}){
             name="group1"
             type="radio"
             id={`inline-2`}
-            onClick={() => setDataType(TABLE)}
+            onClick={() => dispatch(setDataType(TABLE))}
           />
           </Container>
           

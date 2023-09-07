@@ -5,13 +5,13 @@ import SideBar from './SideBar';
 import TableSwitcher from './TableSwitcher';
 
 
-function Footer(props) {
+function Footer() {
   const [showSideBar, setShowSideBar] = useState(false);
   return (
   <>
-            <TableSwitcher {...props}/>
-            <DaySwitcher setShowSideBar={setShowSideBar} {...props}/>
-            <SideBar show={showSideBar} handleClose={()=> setShowSideBar(false)} {...props}/>
+            <TableSwitcher />
+            <DaySwitcher setShowSideBar={setShowSideBar} />
+            <SideBar show={showSideBar} handleClose={()=> setShowSideBar(false)} />
     </>
   );
 }

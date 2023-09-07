@@ -5,24 +5,18 @@ import { useState, useEffect } from "react";
 import { CHART} from "../constants";
 import DataTable from "./DataTable";
 import ErrorModal from "./ErrorModal";
-import { getElectricityPrice, getGasPrice, getLastGasPrice} from "../services/apiService";
+import { getElectricityPrice, getGasPrice, getGasCurrentPrice} from "../services/apiService";
+import { setElectricityPrice,  setGasPrice, setGasCurrentPrice } from "../services/stateService";
+import { useDispatch,useSelector } from "react-redux";
 
 
 
-function Body({
-    dataType,
-    selectedPeriod,
-    setActiveEnergy,
-    activeEnergy,
-    electricityPrice,
-    setElectricityPrice,
-    gasPrice,
-    setGasPrice,
-    lastGasPrice,
-    setLastGasPrice,
-}){
+
+function Body(){
+    const dataType = useSelector((state)=>state.dataType);
+    const selectedPeriod = useSelector((state)=>state.selectedPeriod);
+    const dispatch = useDispatch();
     
-   
     const [errorMessage, setErrorMessage] = useState(null);
 useEffect(()=> {
     
@@ -31,7 +25,7 @@ useEffect(()=> {
             if(!data.success){
                 throw data.messages[0];
             }
-            setElectricityPrice(data.data);
+           dispatch( setElectricityPrice(data.data));
 })
 .catch(setErrorMessage);
     getGasPrice({selectedPeriod}).then(data=>{
@@ -39,42 +33,31 @@ useEffect(()=> {
             if(!data.success){
                 throw data.messages[0];
             }
-            setGasPrice(data.data);
+           dispatch( setGasPrice(data.data));
 
 })
 .catch(setErrorMessage);
-},[selectedPeriod, setElectricityPrice,setGasPrice]);
+},[selectedPeriod, dispatch]);
 
 useEffect(()=> {
-    getLastGasPrice().then(data=>{
+    getGasCurrentPrice().then(data=>{
         console.log('lastGas',data);
         if(!data.success){
             throw data.messages[0];
         }
-        setLastGasPrice(data.data[0].price);
+dispatch(setGasCurrentPrice (data.data[0].price));
     })
     .catch(setErrorMessage);
         
 
-},[setLastGasPrice]);
+},[dispatch]);
 
 
     return(
         <>
-        <Header 
-        activeEnergy={activeEnergy} 
-        setActiveEnergy={setActiveEnergy}
-        electricityPrice={electricityPrice}
-        lastGasPrice={lastGasPrice}
-        />
+        <Header/>
         {dataType === CHART?
-        <Chart activeEnergy={activeEnergy}
-        electricityPrice={electricityPrice}
-        gasPrice={gasPrice}
-        /> : <DataTable electricityPrice={electricityPrice}
-        gasPrice={gasPrice}
-        activeEnergy={activeEnergy}
-        />}
+        <Chart/> : <DataTable />}
         <ErrorModal errorMessage={errorMessage} 
         handleClose = {() => setErrorMessage(null)}
         />

@@ -32,7 +32,7 @@ export async function getGasPrice({to,selectedPeriod,from}){
     return await response.json();
 }
 
-export async function getLastGasPrice(){
+export async function getGasCurrentPrice(){
     const country = 'EE'
     const response = await fetch(`${apiUrl}/gas-trade/${country}/latest`);
     return await response.json();
