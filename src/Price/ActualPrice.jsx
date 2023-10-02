@@ -1,0 +1,7 @@
+function ActualPrice(){
+    return(
+        <>
+        
+        </>
+    );
+}
